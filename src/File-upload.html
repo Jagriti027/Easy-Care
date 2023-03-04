@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>File Upload</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!--Stylesheet-->
+    <style media="screen">
+      *,
+      *:before,
+      *:after {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: #ffffff;
+      }
+      .background {
+        width: 430px;
+        height: 520px;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+      }
+      .background .shape {
+        height: 200px;
+        width: 200px;
+        position: absolute;
+        border-radius: 50%;
+      }
+      .shape:first-child {
+        background: linear-gradient(#1845ad, #23a2f6);
+        left: -80px;
+        top: -80px;
+      }
+      .shape:last-child {
+        background: linear-gradient(to right, #1845ad, #23a2f6);
+        right: -30px;
+        bottom: -80px;
+      }
+      form {
+        height: 550px;
+        width: 400px;
+        background-color: rgba(255, 255, 255, 0.13);
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+        padding: 50px 35px;
+      }
+      form * {
+        font-family: "Poppins", sans-serif;
+        color: black;
+        letter-spacing: 0.5px;
+        outline: none;
+        border: none;
+      }
+      form h3 {
+        font-size: 32px;
+        font-weight: 500;
+        line-height: 42px;
+        text-align: center;
+      }
+
+      label {
+        display: block;
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      input {
+        display: block;
+        height: 50px;
+        width: 100%;
+        background-color: rgba(129, 158, 243, 0.27);
+        border-radius: 3px;
+        padding: 0 10px;
+        margin-top: 8px;
+        font-size: 14px;
+        font-weight: 300;
+      }
+      ::placeholder {
+        color: black;
+      }
+      .image-preview {
+        width: 300px;
+        min-height: 100px;
+        border: 2px solid #dddddd;
+        margin-top: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #cccccc;
+      }
+      .image-preview__image {
+        display: none;
+        width: 100%;
+      }
+      button {
+        margin-top: 50px;
+        width: 100%;
+        background-color: #23a2f6;
+        color: #ffffff;
+        padding: 15px 0;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 5px;
+        border-color: #23a2f6;
+        cursor: pointer;
+        transition: 0.2s ease-in-out;
+      }
+      button:hover {
+        background-color: #fff;
+        color: rgba(12, 12, 13, 0.904);
+        border-color: #23a2f6;
+      }
+      .social {
+        margin-top: 30px;
+        display: flex;
+      }
+
+      .button {
+        background-color: #23a2f6;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .button:hover {
+        background-color: #fff;
+        color: rgba(12, 12, 13, 0.904);
+      }
+
+      .button--flex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+      }
+
+      .button__icon {
+        margin-left: 10px;
+        font-size: 20px;
+      }
+      .button {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .button__icon {
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+    <form>
+      <label for="File name">File Name</label>
+      <input type="file" name="Import File" id="imptFile" />
+      <div class="image-preview" id="image-preview">
+        <img src="" alt="Image Preview" class="image-preview__image" />
+        <span class="image-preview__default-text">Image Preview</span>
+      </div>
+
+      <button>Upload</button>
+      <div class="social">
+        <button class="button button--flex">
+          Save
+          <i class="ri-arrow-right-up-line button__icon"></i>
+        </button>
+      </div>
+    </form>
+    <script>
+      const imptFile = document.getElementById("imptFile");
+      const previewContainer = document.getElementById("imagePreview");
+      const previewImage = previewContainer.querySelector(
+        "image-preview__image"
+      );
+      const previewDefaultText =
+        previewContainer.querySelector("image-deafult-text");
+
+      imptFile.addEventListener("change", function () {
+        const File = this.files[0];
+
+        if (file) {
+          const reader = new FileReader();
+
+          previewDefaultText.style.display = "none";
+          previewImage.style.display = "block";
+
+          reader.addEventListener("load", function () {
+            console.log(this);
+            previewImage.setAttribute("src", this.result);
+          });
+
+          reader.readAsDataURL(File);
+        } else {
+          previewDefaultText.style.display = "null";
+          previewImage.style.display = "null";
+          reviewImage.setAttribute("src", " ");
+        }
+      });
+    </script>
+  </body>
+</html>
